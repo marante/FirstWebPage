@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Bravis workplanner</h1>
+    <table>
+        <tr>
+            <th>OBJ-NR</th>
+            <th>Skapad</th>
+            <th>Beskrivning</th>
+            <th>Adress</th>
+            <th>Start</th>
+            <th>Status</th>
+            <th>Fakturerat</th>
+        </tr>
+        <tr>
+            <td>B-450</td>
+            <td>2018-05-30</td>
+            <td>Målning av badrum och kök</td>
+            <td>Pilevallsvägen 18</td>
+            <td>Startfält</td>
+            <td>Pågående</td>
+            <td>2018-06-15</td>
+        </tr>
+    </table>
+    <br>
+
+    <form action="/workorders" method="POST">
+        Beskrivning
+        <input type="text" name="description">
+        <br/> Adress:
+        <input type="text" name="address">
+        <br/> Start
+        <input type="text" name="start">
+        <br/> Status
+        <input type="text" name="status">
+        <br/> Fakturerat
+        <input type="text" name="invoice">
+        <br/>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        workorderTable = document.querySelector("table")
+
+        fetch("/workorders")
+        .then(response => response.json())
+        .then(workorders => {
+            workorders.forEach(order => {
+                row = document.createElement("tr")
+
+                desc = document.createElement("td")
+                desc.innerHTML = order.description
+                addr = document.createElement("td")
+                addr.innerHTML = order.address
+                start = document.createElement("td")
+                start.innerHTML = order.start
+                status = document.createElement("td")
+                status.innerHTML = order.start
+                invoice = document.createElement("td")
+                invoice.innerHTML = order.invoice
+
+                row.appendChild(desc)
+                row.appendChild(addr)
+                row.appendChild(start)
+                row.appendChild(status)
+                row.appendChild(invoice)
+                workorderTable.appendChild(row)
+            })
+        })
+    </script>
+</body>
+</html>
